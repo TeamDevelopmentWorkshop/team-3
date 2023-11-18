@@ -66,7 +66,7 @@ class App:
     def update_play_scene(self):
         # frame_countが適当な値の倍数のとき、ememiesリストに新たなEnemyを追加する
         
-        if pyxel.frame_count % 100==0:    # pyxel.frame_countが適当な値の倍数の時
+        if pyxel.frame_count % 10==0:    # pyxel.frame_countが適当な値の倍数の時
             self.enemies.append(
                 # 敵キャラクターをリストに追加する
                 # 追加する要素は「Enemy.Enemy(x座標, y座標)」と書く
@@ -86,9 +86,10 @@ class App:
                 # かつ x軸方向の条件②
                 # かつ y軸方向の条件①
                 # かつ y軸方向の条件②
-                self.player.x + self.player.w < enemy.x  and self.player.x > enemy.x + enemy.w and
+                self.player.x + self.player.w > enemy.x  and self.player.x < enemy.x + enemy.w and
                 self.player.y < enemy.y + enemy.h and self.player.h +self.player.y > enemy.y 
             ):
+                self.player.is_alive = False
                 enemy.is_alive =  False  # 敵キャラクターを消す
                 self.scene =  SCENE_GAMEOVER  # ゲーム画面をゲームオーバー画面に切り替える
 
@@ -110,30 +111,32 @@ class App:
                     # かつ x軸方向の条件②
                     # かつ y軸方向の条件①
                     # かつ y軸方向の条件②
-                    enemy.x < self.x +self.w and enemy.x +enemy.w > self.x and
-                    enemy.y < self.y + self.h and enemy.y+enemy.h > self.h
+                    enemy.x < bullet.x +bullet.w and enemy.x +enemy.w > bullet.x and
+                    enemy.y < bullet.y + bullet.h and enemy.y+enemy.h > bullet.y
                 ):
                     # 敵キャラクターと弾丸を消す
+                    print("HIT")
                     enemy.is_alive = False
                     bullet.is_alive = False
 
                     # 爆発エフェクトを描画する
                     # append関数を使ってself.blastsにBlast.Blast(x座標, y座標)を追加する
                     self.blasts.append(
-                Blast.Blast((enemy.w-enemy.x)/2,(enemy.h-enemy.y)/2)
-            )
+                    Blast.Blast(enemy.x+enemy.w/2,enemy.y+enemy.h/2)
+                )
         
         
 
         # スペースキーが押されたら弾丸を発射する
+
         
         if  pyxel.btnp(pyxel.KEY_SPACE) :    # スペースキーが押されたら
             self.bullets.append(
                 # 弾丸をリストに追加する
                 # 追加する要素は、「Bullet.Bullet(x座標, y座標)」と書く
-                self.bullets.append(
-                Bullet.Bullet((self.player.w-self.player.x)/2,self.player.y)
-            )
+                
+                Bullet.Bullet(self.player.x+self.player.w/2-Bullet.BULLET_WIDTH/2.,self.player.y)
+            
 
             )
     

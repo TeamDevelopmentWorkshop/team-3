@@ -31,8 +31,7 @@ class Enemy:
 
         if(self.y > pyxel.height):
             self.is_alive = False
-        else:
-            self.is_alive = True
+        
         # yが画面の下端より大きいとき、is_aliveをFalseにする
         return
     
