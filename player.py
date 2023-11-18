@@ -27,6 +27,10 @@ class Player:
         # ex) 右矢印が押されていたら、xにPLAYER_SPEEDを足す
 
         # python標準関数のmaxとminを使って、Playerが画面外に出ないようにする
+        self.x = max(self.x,0)
+        self.x = min(self.x,112)
+        self.y = max(self.y,0)
+        self.y = min(self.y,152)
         return
 
     def draw(self):
