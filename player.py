@@ -14,6 +14,16 @@ class Player:
 
     def update(self):
         # Playerを十字キーで操作する
+        
+        if pyxel.btn(pyxel.KEY_RIGHT):
+            self.x += PLAYER_SPEED
+        if pyxel.btn(pyxel.KEY_DOWN):
+            self.y += PLAYER_SPEED
+        if pyxel.btn(pyxel.KEY_UP):
+            self.y -= PLAYER_SPEED
+        if pyxel.btn(pyxel.KEY_LEFT):
+            self.x -= PLAYER_SPEED
+
         # ex) 右矢印が押されていたら、xにPLAYER_SPEEDを足す
 
         # python標準関数のmaxとminを使って、Playerが画面外に出ないようにする
@@ -21,6 +31,7 @@ class Player:
 
     def draw(self):
         # イメージバンクの(0, 0)からサイズ(w, h)の領域を、(x, y)にコピー
+        pyxel.blt(self.x,self.y,0,0,0,self.w,self.h)
         return
 
     def test(self):
