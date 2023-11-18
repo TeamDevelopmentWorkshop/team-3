@@ -29,7 +29,7 @@ class Player:
         # python標準関数のmaxとminを使って、Playerが画面外に出ないようにする
         self.x = max(self.x,0)
         self.x = min(self.x,112)
-        self.y = max(self.y,0)
+        self.y = max(self.y,76)
         self.y = min(self.y,152)
         return
 
