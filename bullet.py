@@ -16,11 +16,15 @@ class Bullet:
 
     def update(self):
         # 弾の速度（BULLET_SPEED）分だけ画面の上方向に移動する
+        self.y -= BULLET_SPEED
         # 弾の上端が画面の端に来たら、is_aliveをFalseにする
+        if self.y == 0:
+            self.is_alive = False
         return
 
     def draw(self):
         # 位置（x, y）に、幅がw、高さがhの長方形を描く
+        pyxel.rect(self.x,self.y,self.w,self.h,3)
         return
 
     def test(self):
