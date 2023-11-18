@@ -58,20 +58,27 @@ class App:
 
     def update_title_scene(self):
         # ENTERキーが押されたら、self.sceneをSCENE_PLAYに更新
+        if pyxel.btnp(pyxel.KEY_RETURN) :
+            self.scene = SCENE_PLAY
+        
         return
 
     def update_play_scene(self):
         # frame_countが適当な値の倍数のとき、ememiesリストに新たなEnemyを追加する
-        '''
-        if :    # pyxel.frame_countが適当な値の倍数の時
+        
+        if pyxel.frame_count % 10==0:    # pyxel.frame_countが適当な値の倍数の時
             self.enemies.append(
                 # 敵キャラクターをリストに追加する
                 # 追加する要素は「Enemy.Enemy(x座標, y座標)」と書く
+                Enemy.Enemy(pyxel.rndi(0,pyxel.width),0)
+
+
             )
-        '''
+        
+
 
         # プレイヤーと敵キャラクターの当たり判定
-        '''
+        
         for enemy in self.enemies:
             if (
                 # プレイヤーが敵キャラクターと当たったときの条件
@@ -79,17 +86,23 @@ class App:
                 # かつ x軸方向の条件②
                 # かつ y軸方向の条件①
                 # かつ y軸方向の条件②
+                self.player.x + self.player.w > enemy.x  and self.player.x < enemy.x + enemy.w and
+                self.player.y < enemy.y + enemy.h and self.player.h +self.player.y > enemy.y 
             ):
-                enemy.is_alive =    # 敵キャラクターを消す
-                self.scene =    # ゲーム画面をゲームオーバー画面に切り替える
+                self.player.is_alive = False
+                enemy.is_alive =  False  # 敵キャラクターを消す
+                self.scene =  SCENE_GAMEOVER  # ゲーム画面をゲームオーバー画面に切り替える
 
                 # 爆発エフェクトを描画する
                 # append関数を使ってself.blastsにBlast.Blast(x座標, y座標)を追加する
-        '''
+                self.blasts.append(
+                Blast.Blast((self.player.w-self.player.x)/2,(self.player.h-self.player.y)/2)
+            )
+        
 
         # 弾丸と敵キャラクターの当たり判定
         # 当たった敵キャラクターと弾丸を消す
-        '''
+        
         for enemy in self.enemies:
             for bullet in self.bullets:
                 if (
@@ -98,23 +111,35 @@ class App:
                     # かつ x軸方向の条件②
                     # かつ y軸方向の条件①
                     # かつ y軸方向の条件②
+                    enemy.x < bullet.x +bullet.w and enemy.x +enemy.w > bullet.x and
+                    enemy.y < bullet.y + bullet.h and enemy.y+enemy.h > bullet.y
                 ):
                     # 敵キャラクターと弾丸を消す
-                    enemy.is_alive =
-                    bullet.is_alive =
+                    print("HIT")
+                    enemy.is_alive = False
+                    bullet.is_alive = False
 
                     # 爆発エフェクトを描画する
                     # append関数を使ってself.blastsにBlast.Blast(x座標, y座標)を追加する
-        '''
+                    self.blasts.append(
+                    Blast.Blast(enemy.x+enemy.w/2,enemy.y+enemy.h/2)
+                )
+        
+        
 
         # スペースキーが押されたら弾丸を発射する
-        '''
-        if :    # スペースキーが押されたら
+
+        
+        if  pyxel.btnp(pyxel.KEY_SPACE) :    # スペースキーが押されたら
             self.bullets.append(
                 # 弾丸をリストに追加する
                 # 追加する要素は、「Bullet.Bullet(x座標, y座標)」と書く
+                
+                Bullet.Bullet(self.player.x+self.player.w/2-Bullet.BULLET_WIDTH/2.,self.player.y)
+            
+
             )
-        '''
+    
 
         self.player.update()
         self.update_list(self.enemies)
@@ -155,6 +180,12 @@ class App:
         # (22, 66)の位置に、タイトル「Pyxel Shooter Example」を表示
         # (31, 126)の位置に、「- PRESS ENTER -」を表示
         # 文字の位置と内容は好きな値に変更してください
+        pyxel.text(22,66,"Pyxel shooter Example", pyxel.frame_count % 16)
+        pyxel.text(31,126,"Pless Enter", 13)
+
+
+
+
         return
 
     def draw_play_scene(self):
