@@ -21,12 +21,13 @@ class Enemy:
         # x方向の速度は一定の間隔で向きを変える
         # ヒント１：frame_count変数を適当な値で割った時の余りを使って条件分岐する
         # ヒント２：frame_countに乱数（timer_offset）を加えて、向きを変えるタイミングをランダムにする
-
+        
         # yが画面の下端より大きいとき、is_aliveをFalseにする
         return
     
     def draw(self):
         # イメージバンクの(u, v)からサイズ(w, h)の領域を、(x, y)にコピー
+        pyxel.blt(self.x,self.y,0,8,0,self.dir * self.w,self.h)
         return
 
     def test(self):
