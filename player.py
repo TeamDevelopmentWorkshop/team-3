@@ -11,6 +11,7 @@ class Player:
         self.w = PLAYER_WIDTH
         self.h = PLAYER_HEIGHT
         self.is_alive = True
+    
 
     def update(self):
         # Playerを十字キーで操作する
@@ -27,8 +28,14 @@ class Player:
         # ex) 右矢印が押されていたら、xにPLAYER_SPEEDを足す
 
         # python標準関数のmaxとminを使って、Playerが画面外に出ないようにする
-        self.x = max(self.x,0)
-        self.x = min(self.x,112)
+        if self.x <= 0:
+            self.x = 112
+        if self.x > 112:
+            self.x = 0
+
+        """self.x = max(self.x,0)
+        self.x = min(self.x,112)"""
+        
         self.y = max(self.y,76)
         self.y = min(self.y,152)
         return
