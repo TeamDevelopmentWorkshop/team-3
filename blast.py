@@ -15,11 +15,19 @@ class Blast:
     def update(self):
         # 自身の半径を1だけ大きくする
         # 閾値（BLAST_END_RADIUS）より半径が大きくなったら、is_aliveをFalseにする
+        self.radius += 1
+        if(self.radius > BLAST_END_RADIUS):
+            self.is_alive = False
+        else:
+            self.is_alive = True
+
         return
 
     def draw(self):
         # 位置（x, y）に半径がradiusの円を描く
         # 位置（x, y）に半径がradiusの円の輪郭線を描く
+        pyxel.circ(self.x,self.y,self.radius,BLAST_COLOR_IN)
+        pyxel.circb(self.x,self.y,self.radius,BLAST_COLOR_OUT)
         return
 
     def test(self):
