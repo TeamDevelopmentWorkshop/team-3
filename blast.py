@@ -18,7 +18,7 @@ class Blast:
         self.radius += 1
         pyxel.tick = 0
         pyxel.loop = True
-        pyxel.sound(0).set("a1a-2a3 rr b1b#2b3 rr","p t","6 7","v f",25)
+        pyxel.sound(0).set("a1a-2a3 rr b1b#2b3 rr","p t","6 7","v f",5)
         pyxel.play(0,0,pyxel.tick,pyxel.loop)
         if(self.radius > BLAST_END_RADIUS):
             self.is_alive = False
